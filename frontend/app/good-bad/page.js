@@ -99,7 +99,7 @@ function GoodBadInner() {
         <Paper elevation={0} sx={{ p: { xs: 1.25, sm: 1.75 }, mb: 2, borderRadius: { xs: 2.5, sm: 3 }, border: "1px solid", borderColor: "divider", bgcolor: "background.paper" }}>
           <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
             <TextField fullWidth size="small" placeholder="Search entries..." value={search} onChange={(e) => setSearch(e.target.value)} sx={{ flex: 2, minWidth: 180 }} InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ fontSize: 20, color: "text.secondary" }} /></InputAdornment> }} />
-            <TextField select size="small" label="Type" value={type} onChange={(e) => setType(e.target.value)} sx={{ minWidth: 130, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+            <TextField select size="small" label="Type" value={type} onChange={(e) => setType(e.target.value)} sx={{ minWidth: 130, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
               {TYPES.map((t) => <MenuItem key={t || "all"} value={t}>{t || "All"}</MenuItem>)}
             </TextField>
           </Stack>

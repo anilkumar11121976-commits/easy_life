@@ -152,10 +152,10 @@ function ReceivedPaymentsInner() {
             />
 
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              <TextField select size="small" label="Status" value={status} onChange={(e) => setStatus(e.target.value)} sx={{ minWidth: 130, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Status" value={status} onChange={(e) => setStatus(e.target.value)} sx={{ minWidth: 130, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {STATUSES.map((s) => <MenuItem key={s || "all"} value={s}>{s || "All Statuses"}</MenuItem>)}
               </TextField>
-              <TextField select size="small" label="Source" value={source} onChange={(e) => setSource(e.target.value)} sx={{ minWidth: 150, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Source" value={source} onChange={(e) => setSource(e.target.value)} sx={{ minWidth: 150, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {SOURCES.map((s) => <MenuItem key={s || "all"} value={s}>{s ? s.replace("_", " ") : "All Sources"}</MenuItem>)}
               </TextField>
               {hasFilters && (

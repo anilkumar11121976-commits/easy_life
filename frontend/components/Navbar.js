@@ -43,6 +43,8 @@ import ReportProblemRoundedIcon from "@mui/icons-material/ReportProblemRounded";
 import AutoAwesomeRoundedIcon from "@mui/icons-material/AutoAwesomeRounded";
 import ShoppingCartRoundedIcon from "@mui/icons-material/ShoppingCartRounded";
 import WorkOutlineRoundedIcon from "@mui/icons-material/WorkOutlineRounded";
+import BadgeRoundedIcon from "@mui/icons-material/BadgeRounded";
+import LaptopMacRoundedIcon from "@mui/icons-material/LaptopMacRounded";
 import CelebrationRoundedIcon from "@mui/icons-material/CelebrationRounded";
 import SearchRoundedIcon from "@mui/icons-material/SearchRounded";
 import CloseRoundedIcon from "@mui/icons-material/CloseRounded";
@@ -117,6 +119,13 @@ const NAV_GROUPS = [
     items: [
       { label: "Recruitment", href: "/recruitment", icon: <WorkOutlineRoundedIcon /> },
       { label: "Events", href: "/events", icon: <CelebrationRoundedIcon /> },
+    ],
+  },
+  {
+    title: "Employee",
+    items: [
+      { label: "Employees", href: "/employees", icon: <BadgeRoundedIcon /> },
+      { label: "Company Assets", href: "/assets", icon: <LaptopMacRoundedIcon /> },
     ],
   },
 ];

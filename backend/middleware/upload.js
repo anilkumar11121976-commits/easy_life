@@ -59,9 +59,52 @@ const uploadPaymentScreenshot = multer({
   },
 });
 
+// --- new: employee profile photo uploads (single photo) ---
+const employeePhotoStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "expense-reminder/employees",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+    transformation: [{ width: 800, height: 800, crop: "limit" }],
+  },
+});
+
+const uploadEmployeePhoto = multer({
+  storage: employeePhotoStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype || !file.mimetype.startsWith("image/")) {
+      return cb(new Error("Only image files are allowed for the employee photo."));
+    }
+    cb(null, true);
+  },
+});
+
+// --- new: asset issue/return proof photos (multiple, both directions) ---
+const assetPhotoStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: "expense-reminder/assets",
+    allowed_formats: ["jpg", "jpeg", "png", "webp"],
+    transformation: [{ width: 1600, height: 1600, crop: "limit" }],
+  },
+});
+
+const uploadAssetPhotos = multer({
+  storage: assetPhotoStorage,
+  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB per photo
+  fileFilter: (req, file, cb) => {
+    if (!file.mimetype || !file.mimetype.startsWith("image/")) {
+      return cb(new Error("Only image files are allowed for asset photos."));
+    }
+    cb(null, true);
+  },
+});
+
 // Default export stays the bills uploader (unchanged for existing callers).
-// uploadTaskPhoto / uploadPaymentScreenshot are attached as named
-// properties for their respective routes.
+// The rest are attached as named properties for their respective routes.
 module.exports = upload;
 module.exports.uploadTaskPhoto = uploadTaskPhoto;
 module.exports.uploadPaymentScreenshot = uploadPaymentScreenshot;
+module.exports.uploadEmployeePhoto = uploadEmployeePhoto;
+module.exports.uploadAssetPhotos = uploadAssetPhotos;

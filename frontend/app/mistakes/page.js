@@ -117,23 +117,23 @@ function MistakesInner() {
               InputProps={{ startAdornment: <InputAdornment position="start"><SearchIcon sx={{ fontSize: 20, color: "text.secondary" }} /></InputAdornment> }}
             />
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap alignItems="center">
-              <TextField select size="small" label="Who" value={personType} onChange={(e) => { setPersonType(e.target.value); setPersonUser(""); }} sx={{ minWidth: 120, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Who" value={personType} onChange={(e) => { setPersonType(e.target.value); setPersonUser(""); }} sx={{ minWidth: 120, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {PERSON_TYPES.map((t) => <MenuItem key={t || "all"} value={t}>{t || "Everyone"}</MenuItem>)}
               </TextField>
               {personType === "TeamMember" && (
-                <TextField select size="small" label="Person" value={personUser} onChange={(e) => setPersonUser(e.target.value)} sx={{ minWidth: 140, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+                <TextField select size="small" label="Person" value={personUser} onChange={(e) => setPersonUser(e.target.value)} sx={{ minWidth: 140, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                   <MenuItem value="">All</MenuItem>
                   {people.map((p) => <MenuItem key={p._id} value={p._id}>{p.name}</MenuItem>)}
                 </TextField>
               )}
-              <TextField select size="small" label="Category" value={category} onChange={(e) => setCategory(e.target.value)} sx={{ minWidth: 130, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Category" value={category} onChange={(e) => setCategory(e.target.value)} sx={{ minWidth: 130, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 <MenuItem value="">All</MenuItem>
                 {categories.map((c) => <MenuItem key={c._id} value={c._id}>{c.name}</MenuItem>)}
               </TextField>
-              <TextField select size="small" label="Severity" value={severity} onChange={(e) => setSeverity(e.target.value)} sx={{ minWidth: 120, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Severity" value={severity} onChange={(e) => setSeverity(e.target.value)} sx={{ minWidth: 120, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {SEVERITIES.map((s) => <MenuItem key={s || "all"} value={s}>{s || "All"}</MenuItem>)}
               </TextField>
-              <TextField select size="small" label="Status" value={status} onChange={(e) => setStatus(e.target.value)} sx={{ minWidth: 120, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Status" value={status} onChange={(e) => setStatus(e.target.value)} sx={{ minWidth: 120, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {STATUSES.map((s) => <MenuItem key={s || "all"} value={s}>{s || "All"}</MenuItem>)}
               </TextField>
               {hasFilters && <Button size="small" onClick={clearFilters} sx={{ textTransform: "none", color: "primary.light", fontWeight: 650 }}>Clear all</Button>}

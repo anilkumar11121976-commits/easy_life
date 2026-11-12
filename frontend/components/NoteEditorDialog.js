@@ -140,7 +140,7 @@ export default function NoteEditorDialog({ open, note, folders, onClose, onSaved
 
         <TextField
           select size="small" fullWidth label="Folder" value={folder} onChange={(e) => setFolder(e.target.value)}
-          sx={{ mt: 2 }} SelectProps={{ displayEmpty: true }}
+          sx={{ mt: 2 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}
         >
           <MenuItem value="">Unfiled</MenuItem>
           {folders.map((f) => <MenuItem key={f._id} value={f._id}>{f.name}</MenuItem>)}

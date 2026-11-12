@@ -73,6 +73,13 @@ const receivedPaymentRoutes = require("./routes/receivedPaymentRoutes");
 // vice versa) without an explicit, validated choice of API.
 const sentPaymentRoutes = require("./routes/sentPaymentRoutes");
 
+// NEW: employee & company-asset issuance tracking — who was given what
+// (laptop, mouse, headphone, ID card, ...) at joining, and what's been
+// returned at exit. Two models: Employee (profile) and AssetIssuance
+// (one record per physical item given to one employee).
+const employeeRoutes = require("./routes/employeeRoutes");
+const assetIssuanceRoutes = require("./routes/assetIssuanceRoutes");
+
 const app = express();
 
 /* =========================================================
@@ -220,6 +227,10 @@ app.use("/api/event-item-templates", eventItemTemplateRoutes);
 // NEW: received payments / sent payments modules.
 app.use("/api/received-payments", receivedPaymentRoutes);
 app.use("/api/sent-payments", sentPaymentRoutes);
+
+// NEW: employees + asset issuance/return tracking.
+app.use("/api/employees", employeeRoutes);
+app.use("/api/asset-issuances", assetIssuanceRoutes);
 
 /* =========================================================
   ERROR HANDLING

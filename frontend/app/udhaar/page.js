@@ -136,13 +136,13 @@ function UdhaarInner() {
             />
 
             <Stack direction="row" spacing={1} flexWrap="wrap" useFlexGap>
-              <TextField select size="small" label="Type" value={type} onChange={(e) => setType(e.target.value)} sx={{ minWidth: 110, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Type" value={type} onChange={(e) => setType(e.target.value)} sx={{ minWidth: 110, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {TYPES.map((t) => <MenuItem key={t || "all"} value={t}>{t || "All Types"}</MenuItem>)}
               </TextField>
-              <TextField select size="small" label="Category" value={category} onChange={(e) => setCategory(e.target.value)} sx={{ minWidth: 110, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Category" value={category} onChange={(e) => setCategory(e.target.value)} sx={{ minWidth: 110, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {CATEGORIES.map((c) => <MenuItem key={c || "all"} value={c}>{c || "All Categories"}</MenuItem>)}
               </TextField>
-              <TextField select size="small" label="Status" value={status} onChange={(e) => setStatus(e.target.value)} sx={{ minWidth: 130, flex: 1 }} SelectProps={{ displayEmpty: true }}>
+              <TextField select size="small" label="Status" value={status} onChange={(e) => setStatus(e.target.value)} sx={{ minWidth: 130, flex: 1 }} InputLabelProps={{ shrink: true }} SelectProps={{ displayEmpty: true }}>
                 {STATUSES.map((s) => <MenuItem key={s || "all"} value={s}>{s || "All Statuses"}</MenuItem>)}
               </TextField>
             </Stack>

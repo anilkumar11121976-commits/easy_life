@@ -13,12 +13,14 @@ import LaptopMacRoundedIcon from "@mui/icons-material/LaptopMacRounded";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 import PersonAddAlt1Icon from "@mui/icons-material/PersonAddAlt1";
 import DeleteOutlineIcon from "@mui/icons-material/DeleteOutline";
+import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 
 import { toast } from "react-toastify";
 
 import api from "../../lib/api";
 import ImageLightbox from "../../components/ImageLightbox";
 import QuickAddEmployeeDialog from "../../components/QuickAddEmployeeDialog";
+import ManageCategoriesDialog from "../../components/ManageCategoriesDialog";
 
 const CONDITIONS = ["New", "Good", "Fair", "Damaged"];
 const MAX_PHOTOS = 5;
@@ -63,6 +65,7 @@ export default function AssetIssuanceForm({ mode = "create", initialData = null,
   const [selectedEmployee, setSelectedEmployee] = useState(null);
   const [quickAddOpen, setQuickAddOpen] = useState(false);
   const [quickAddSeedName, setQuickAddSeedName] = useState("");
+  const [manageCategoriesOpen, setManageCategoriesOpen] = useState(false);
 
   const [categoryOptions, setCategoryOptions] = useState(PRESET_CATEGORIES);
 
@@ -94,11 +97,23 @@ export default function AssetIssuanceForm({ mode = "create", initialData = null,
       .catch(() => {});
   };
 
+  const loadCategories = () => {
+    Promise.all([
+      api.get("/asset-categories").catch(() => ({ data: [] })),
+      api.get("/asset-issuances/suggestions/categories").catch(() => ({ data: [] })),
+    ]).then(([managed, legacy]) => {
+      const names = [
+        ...PRESET_CATEGORIES,
+        ...(managed.data || []).map((c) => c.name),
+        ...(legacy.data || []),
+      ];
+      setCategoryOptions([...new Set(names)]);
+    });
+  };
+
   useEffect(() => {
     loadEmployees();
-    api.get("/asset-issuances/suggestions/categories")
-      .then((res) => setCategoryOptions([...new Set([...PRESET_CATEGORIES, ...(res.data || [])])]))
-      .catch(() => {});
+    loadCategories();
   }, []);
 
   // Pre-fill employee from "+ Issue Asset" on an employee's own page.
@@ -363,9 +378,18 @@ export default function AssetIssuanceForm({ mode = "create", initialData = null,
             <Divider />
 
             {/* ITEM ROWS */}
-            <Typography variant="caption" fontWeight={700} color="text.secondary">
-              {isEdit ? "ITEM" : rows.length > 1 ? `ITEMS (${rows.length})` : "ITEM"}
-            </Typography>
+            <Stack direction="row" justifyContent="space-between" alignItems="center">
+              <Typography variant="caption" fontWeight={700} color="text.secondary">
+                {isEdit ? "ITEM" : rows.length > 1 ? `ITEMS (${rows.length})` : "ITEM"}
+              </Typography>
+              <Button
+                size="small" startIcon={<TuneRoundedIcon sx={{ fontSize: 14 }} />}
+                onClick={() => setManageCategoriesOpen(true)}
+                sx={{ textTransform: "none", fontSize: 11, color: "text.secondary", minHeight: "auto", py: 0.25 }}
+              >
+                Manage Categories
+              </Button>
+            </Stack>
 
             {rows.map((row, index) => {
               const rowTotalPhotos = isEdit ? existingPhotos.length + row.photoFiles.length : row.photoFiles.length;
@@ -527,6 +551,12 @@ export default function AssetIssuanceForm({ mode = "create", initialData = null,
         initialName={quickAddSeedName}
         onClose={() => setQuickAddOpen(false)}
         onAdded={handleEmployeeAdded}
+      />
+
+      <ManageCategoriesDialog
+        open={manageCategoriesOpen}
+        onClose={() => setManageCategoriesOpen(false)}
+        onChanged={loadCategories}
       />
     </Container>
   );

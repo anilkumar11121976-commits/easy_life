@@ -79,6 +79,7 @@ const sentPaymentRoutes = require("./routes/sentPaymentRoutes");
 // (one record per physical item given to one employee).
 const employeeRoutes = require("./routes/employeeRoutes");
 const assetIssuanceRoutes = require("./routes/assetIssuanceRoutes");
+const assetCategoryRoutes = require("./routes/assetCategoryRoutes");
 
 const app = express();
 
@@ -231,6 +232,7 @@ app.use("/api/sent-payments", sentPaymentRoutes);
 // NEW: employees + asset issuance/return tracking.
 app.use("/api/employees", employeeRoutes);
 app.use("/api/asset-issuances", assetIssuanceRoutes);
+app.use("/api/asset-categories", assetCategoryRoutes);
 
 /* =========================================================
   ERROR HANDLING

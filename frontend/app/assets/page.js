@@ -12,11 +12,13 @@ import SearchIcon from "@mui/icons-material/Search";
 import AddCircleIcon from "@mui/icons-material/AddCircle";
 import LaptopMacRoundedIcon from "@mui/icons-material/LaptopMacRounded";
 import WarningAmberRoundedIcon from "@mui/icons-material/WarningAmberRounded";
+import TuneRoundedIcon from "@mui/icons-material/TuneRounded";
 
 import ProtectedRoute from "../../components/ProtectedRoute";
 import Navbar from "../../components/Navbar";
 import AssetIssuanceCard from "../../components/AssetIssuanceCard";
 import StatCard from "../../components/StatCard";
+import ManageCategoriesDialog from "../../components/ManageCategoriesDialog";
 import api from "../../lib/api";
 
 const STATUSES = ["", "Issued", "Returned", "Lost", "Damaged"];
@@ -35,6 +37,8 @@ function AssetsInner() {
 
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+
+  const [manageCategoriesOpen, setManageCategoriesOpen] = useState(false);
 
   const loadSummary = () => {
     api.get("/asset-issuances/summary").then((res) => setSummary(res.data)).catch(() => {});
@@ -81,14 +85,24 @@ function AssetsInner() {
             </Box>
           </Stack>
 
-          <Button
-            variant="contained" size="small"
-            startIcon={<AddCircleIcon sx={{ fontSize: 18 }} />}
-            onClick={() => router.push("/assets/new")}
-            sx={{ flexShrink: 0, minHeight: 38, px: { xs: 1.4, sm: 2 }, borderRadius: 2, textTransform: "none", fontWeight: 700, fontSize: { xs: 11.5, sm: 12.5 }, whiteSpace: "nowrap", background: "linear-gradient(135deg, #60A5FA, #2563EB)" }}
-          >
-            Issue Asset
-          </Button>
+          <Stack direction="row" spacing={1}>
+            <Button
+              variant="outlined" size="small"
+              startIcon={<TuneRoundedIcon sx={{ fontSize: 18 }} />}
+              onClick={() => setManageCategoriesOpen(true)}
+              sx={{ flexShrink: 0, minHeight: 38, px: { xs: 1.2, sm: 1.75 }, borderRadius: 2, textTransform: "none", fontWeight: 700, fontSize: { xs: 11.5, sm: 12.5 }, whiteSpace: "nowrap" }}
+            >
+              Categories
+            </Button>
+            <Button
+              variant="contained" size="small"
+              startIcon={<AddCircleIcon sx={{ fontSize: 18 }} />}
+              onClick={() => router.push("/assets/new")}
+              sx={{ flexShrink: 0, minHeight: 38, px: { xs: 1.4, sm: 2 }, borderRadius: 2, textTransform: "none", fontWeight: 700, fontSize: { xs: 11.5, sm: 12.5 }, whiteSpace: "nowrap", background: "linear-gradient(135deg, #60A5FA, #2563EB)" }}
+            >
+              Issue Asset
+            </Button>
+          </Stack>
         </Stack>
 
         <Grid container spacing={{ xs: 1, sm: 1.25 }} sx={{ mb: 1.75 }}>
@@ -176,6 +190,12 @@ function AssetsInner() {
           Expense Reminder • Company Assets
         </Typography>
       </Container>
+
+      <ManageCategoriesDialog
+        open={manageCategoriesOpen}
+        onClose={() => setManageCategoriesOpen(false)}
+        onChanged={() => { loadSummary(); load(page); }}
+      />
     </Box>
   );
 }
